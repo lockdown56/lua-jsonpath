@@ -171,6 +171,12 @@ testParse = {
         lu.assertNil(err)
         lu.assertEquals(path, {'$', '..', 'price'})
     end,
+
+    testParserPathForSoccerShoes = function()
+        local path, err = jp.parse('$.store.soccer-shoes')
+        lu.assertNil(err)
+        lu.assertEquals(path, { '$', 'store', 'soccer-shoes' })
+    end,
 }
 
 
@@ -373,7 +379,8 @@ testQuery = {
         lu.assertNil(err)
         lu.assertItemsEquals(results, sortByPath({
             { path = {'$', 'store', 'book'}, value = data.store.book },
-            { path = {'$', 'store', 'bicycle'}, value = data.store.bicycle }
+            { path = {'$', 'store', 'bicycle'}, value = data.store.bicycle },
+            { path = {'$', 'store', 'soccer-shoes'}, value = data.store['soccer-shoes'] }
         }))
     end,
 
@@ -385,7 +392,9 @@ testQuery = {
             { path = {'$', 'store', 'book', 1, 'price'}, value = 12.99 },
             { path = {'$', 'store', 'book', 2, 'price'}, value = 8.99 },
             { path = {'$', 'store', 'book', 3, 'price'}, value = 22.99 },
-            { path = {'$', 'store', 'bicycle', 'price'}, value = 19.95 }
+            { path = {'$', 'store', 'bicycle', 'price'}, value = 19.95 },
+            { path = {'$', 'store', 'soccer-shoes', 'price'}, value = 200.00 }
+
         }))
     end,
 
@@ -447,6 +456,7 @@ testQuery = {
             { path = { '$', 'store' }, value = data.store },
             { path = { '$', 'store', 'book' }, value = data.store.book },
             { path = { '$', 'store', 'bicycle' }, value = data.store.bicycle },
+            { path = { '$', 'store', 'soccer-shoes' }, value = data.store['soccer-shoes'] },
             { path = { '$', 'store', 'book', 0 }, value = data.store.book[1] },
             { path = { '$', 'store', 'book', 1 }, value = data.store.book[2] },
             { path = { '$', 'store', 'book', 2 }, value = data.store.book[3] },
@@ -470,7 +480,9 @@ testQuery = {
             { path = { '$', 'store', 'book', 3, 'isbn' }, value = '0-395-19395-8' },
             { path = { '$', 'store', 'book', 3, 'price' }, value = 22.99 },
             { path = { '$', 'store', 'bicycle', 'color' }, value = 'red' },
-            { path = { '$', 'store', 'bicycle', 'price' }, value = 19.95 }
+            { path = { '$', 'store', 'bicycle', 'price' }, value = 19.95 },
+            { path = { '$', 'store', 'soccer-shoes', 'price' }, value = 200.00 },
+            { path = { '$', 'store', 'soccer-shoes', 'color' }, value = 'blue' }
         }))
     end,
 
@@ -483,7 +495,7 @@ testQuery = {
     testObjectSubscriptWildcard = function()
         local results, err = jp.query(data, '$.store[*]')
         lu.assertNil(err)
-        lu.assertItemsEquals(results, { data.store.book, data.store.bicycle })
+        lu.assertItemsEquals(results, { data.store.book, data.store.bicycle, data.store['soccer-shoes']})
     end,
 
     testNoMatchReturnsEmptyArray = function()

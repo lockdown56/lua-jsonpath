@@ -162,7 +162,7 @@ local jsonpath_grammer = (function()
     local digit = R('09')
     local letter = R('AZ','az')
     local alpha0 = R('AZ','az') + '_'
-    local alphaN = R('AZ','az','09') + '_'
+    local alphaN = R('AZ','az','09') + '_' + '-'
     local hexdigit = R('09', 'AF', 'af')
 
     local number_hex = P'0' * S'xX' * hexdigit^1

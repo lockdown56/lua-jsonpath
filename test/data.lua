@@ -53,6 +53,10 @@ return {
                 isbn = '0-395-19395-8',
                 price = 22.99
             }
+        },
+        ['soccer-shoes'] = {
+            color = 'blue',
+            price = 200.00
         }
     }
 }
